@@ -4,6 +4,7 @@ from tensorflow.keras.layers.experimental.preprocessing import Rescaling
 from tensorflow.keras.optimizers import RMSprop
 
 class BasicModel(Model):
+    # I had chatgpt help me with this because I didnt understand how it worked at first - Thomas Wessel
     def _define_model(self, input_shape, categories_count):
         self.model = Sequential([
             layers.Conv2D(16, (3, 3), activation='relu', input_shape=input_shape),
@@ -17,10 +18,8 @@ class BasicModel(Model):
             layers.Flatten(),
             layers. Dense(28, activation='relu'),
             layers.Dense(categories_count, activation='softmax')
-
-
         ])
-        # self.model.print_summary()
+
 
     def _compile_model(self):
         print("MODEL SUMMARY")
