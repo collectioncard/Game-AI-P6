@@ -43,9 +43,9 @@ if __name__ == "__main__":
     # to load your history and plot it again, you can use:
     # history = np.load('results/name_of_your_model.npy',allow_pickle='TRUE').item()
     # plot_history(history)
-    # 
+    #
     # Your code should change the number of epochs
-    epochs = 1
+    epochs = 15  # Increase the number of epochs
     print('* Data preprocessing')
     train_dataset, validation_dataset, test_dataset = get_datasets()
     name = 'basic_model'
