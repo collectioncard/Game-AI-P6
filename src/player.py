@@ -94,22 +94,21 @@ class UserWebcamPlayer:
             raise e
     
     def _get_emotion(self, img) -> int:
-        # Your code goes here
-        #
-        # img an np array of size NxN (square), each pixel is a value between 0 to 255
-        # you have to resize this to image_size before sending to your model
-        # to show the image here, you can use:
-        # import matplotlib.pyplot as plt
-        # plt.imshow(img, cmap='gray', vmin=0, vmax=255)
-        # plt.show()
-        #
-        # You have to use your saved model, use resized img as input, and get one classification value out of it
-        # The classification value should be 0, 1, or 2 for neutral, happy or surprise respectively
+        # Resize the image to the size of the model
+        img = cv2.resize(img, image_size)
 
-        # return an integer (0, 1 or 2), otherwise the code will throw an error
-        return 1
-        pass
-    
+        # The webcam captures a black and white image, but the model expects a color image. Add a color channel
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+
+        # And expand it to the right shape
+        img = np.expand_dims(img, axis=0)
+
+        model = models.load_model('results/basic_model_15_epochs_timestamp_1722977992.keras')
+        predictions = model.predict(img)
+        emotion = np.argmax(predictions)
+
+        return int(emotion)
+
     def get_move(self, board_state):
         row, col = None, None
         while row is None:
