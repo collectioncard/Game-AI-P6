@@ -6,7 +6,7 @@ from tensorflow.keras.optimizers import RMSprop, Adam
 class TransferedModel(Model):
     def _define_model(self, input_shape, categories_count):
         # Using the model that we are submitting for part 6
-        base_model = models.load_model('results/basic_model_15_epochs_timestamp_1722977992.keras')
+        base_model = models.load_model('results/basic_model_22_epochs_timestamp_1723141018.keras')
 
         # Remove the final softmax layer
         base_model = models.Model(inputs=base_model.input, outputs=base_model.layers[-2].output)
@@ -18,8 +18,10 @@ class TransferedModel(Model):
         self.model = Sequential()
         self.model.add(base_model)
 
+
+
         # Add new fully connected layers
-        self.model.add(layers.Dense(20, activation='relu'))
+        self.model.add(layers.Dense(64, activation='relu'))
         self.model.add(layers.Dense(categories_count, activation='softmax'))
 
     def _compile_model(self):

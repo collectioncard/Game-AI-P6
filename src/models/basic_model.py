@@ -1,6 +1,5 @@
 from models.model import Model
 from tensorflow.keras import Sequential, layers
-from tensorflow.keras.layers.experimental.preprocessing import Rescaling
 from tensorflow.keras.optimizers import RMSprop
 
 class BasicModel(Model):
@@ -8,20 +7,20 @@ class BasicModel(Model):
     # If this is wrong, please change it.
     def _define_model(self, input_shape, categories_count):
         self.model = Sequential([
-            layers.rescaling(1./255, input_shape=input_shape),
+            layers.Rescaling(1./255, input_shape=input_shape),
             layers.Conv2D(16, (3, 3), activation='relu', input_shape=input_shape),
             layers.MaxPooling2D((2, 2)),
             layers.Conv2D(32, (3, 3), activation='relu'),
             layers.MaxPooling2D((2, 2)),
             layers.Conv2D(64, (3, 3), activation='relu'),
             layers.MaxPooling2D((2, 2)),
-            layers.Dropout(0.3),
+            layers.Dropout(0.5),
             layers.Conv2D(64, (3, 3), activation='relu'),
             layers.MaxPooling2D((2, 2)),
             layers.Flatten(),
 
             # Add a dropout layer to prevent overfitting (does 20% work?)
-            layers.Dropout(0.2),
+            layers.Dropout(0.3),
 
             layers. Dense(28, activation='relu'),
             layers.Dense(categories_count, activation='softmax')
@@ -29,9 +28,6 @@ class BasicModel(Model):
 
 
     def _compile_model(self):
-        print("MODEL SUMMARY")
-        self.print_summary()
-        print("END MODEL SUMMARY")
 
         self.model.compile(
             optimizer=RMSprop(learning_rate=0.001),

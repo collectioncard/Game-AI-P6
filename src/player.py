@@ -103,7 +103,7 @@ class UserWebcamPlayer:
         # And expand it to the right shape
         img = np.expand_dims(img, axis=0)
 
-        model = models.load_model('results/basic_model_15_epochs_timestamp_1722977992.keras')
+        model = models.load_model('results/basic_model_22_epochs_timestamp_1723141018.keras')
         predictions = model.predict(img)
         emotion = np.argmax(predictions)
 
